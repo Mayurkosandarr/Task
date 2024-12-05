@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logged Out</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'login' %}">Login</a>
+        </nav>
+    </header>
+
+    <main class="logout-page">
+        <h1>You have been logged out</h1>
+        <p>Thank you for visiting! We hope to see you again soon.</p>
+        <p>
+            <a class="btn" href="{% url 'login' %}">Login again</a> 
+            or 
+            <a class="btn" href="{% url 'home' %}">Return to Home Page</a>
+        </p>
+    </main>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Home</title>
+</head>
+<body>
+    <h1>Blog Application</h1>
+
+    {% if user.is_authenticated %}
+        <h2><p>Welcome, {{ user.username }}!</p></h2>
+        <a href="{% url 'create_post' %}">Create New Post</a> |
+        
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+        </br>
+            <button type="submit">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'register' %}">Register</a> | <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
+    <hr>
+
+    {% for post in posts %}
+        <h2>{{ post.title }}</h2>
+        <p>{{ post.content|truncatechars:100 }}</p>
+        <p>By: {{ post.author.username }} on {{ post.created_at }}</p>
+
+        {% if post.author == user %}
+            <a href="{% url 'edit_post' post.id %}">Edit</a> |
+            
+            <form method="POST" action="{% url 'delete_post' post.id %}">
+                {% csrf_token %}
+            </br>
+                <button type="submit">Delete</button>
+            </form>
+        {% endif %}
+        <hr>
+    {% endfor %}
+</body>
+</html>
